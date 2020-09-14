@@ -13,9 +13,9 @@ def statistic_test(dfs,metric_name,test_excel_name,methods_used):
 
     for i in range(1, dfs.shape[0], methods_used+1):
         if i == 1:
-            metric_values = dfs.loc[i:i + 5][metric_name].values
+            metric_values = dfs.iloc[i:i + methods_used][metric_name].values
         else:
-            metric_values = np.vstack((metric_values, dfs.loc[i:i + 5][metric_name].values))
+            metric_values = np.vstack((metric_values, dfs.iloc[i:i + methods_used][metric_name].values))
 
     metric_values = np.transpose(metric_values)
 
