@@ -118,7 +118,7 @@ def main():
 
     dfs = pd.read_excel(metrics_excel_name, sheet_name=constants.sheet_name)
 
-    for metric in range(0, dfs.shape[1]):  # 0 -> 2
+    for metric in range(2, dfs.shape[1]):  # 0 -> 2
         print("[Statistic_test]: ", dfs.columns[metric])
         statistic_test(dfs, dfs.columns[metric], test_excel_name, methods_used)
 
