@@ -41,7 +41,8 @@ def obtain_similarity_metrics(GT_img, distorted_img):
 def main():
     """
     execution example:
-    - python similarity_metrics.py --path_run "images/" --metrics_excel_name 'metrics.xlsx' --test_excel_name 'statistic_test.xlsx' --methods_used 6
+    python similarity_metrics.py --path_run "images/" --metrics_excel_name 'metrics.xlsx'
+    --test_excel_name 'statistic_test.xlsx' --methods_used 6
     """
 
     parser = argparse.ArgumentParser()
@@ -50,9 +51,10 @@ def main():
     # parser.add_argument('--test_excel_name', default="statistic_test.xlsx", help='statistic test excel name + .xlsx')
     # parser.add_argument('--methods_used', default=len(constants.methods), type=int,  help='different methods used')
     parser.add_argument('--path_run', default="my_images_test2_shallow_ann/", help='path to the run folder.')
-    parser.add_argument('--metrics_excel_name', default="metrics_shallow_ann.xlsx", help='metrics excel name + .xlsx')
-    parser.add_argument('--test_excel_name', default="statistic_test_shallow_ann.xlsx", help='statistic test excel name + .xlsx')
-    parser.add_argument('--methods_used', default=len(constants.methods), type=int,  help='different methods used')
+    parser.add_argument('--metrics_excel_name', default="metrics_shallow3.xlsx", help='metrics excel name + .xlsx')
+    parser.add_argument('--test_excel_name', default="statistic_test_shallow3.xlsx",
+                        help='statistic test excel name + .xlsx')
+    parser.add_argument('--methods_used', default=len(constants.methods), type=int, help='different methods used')
     parsed_args = parser.parse_args(sys.argv[1:])
 
     path_run = parsed_args.path_run
@@ -60,16 +62,15 @@ def main():
     test_excel_name = parsed_args.test_excel_name
     methods_used = parsed_args.methods_used
 
-    print("[path_run]: ",path_run)
-    print("[methods_used]: ",methods_used,constants.methods )
+    print("[path_run]: ", path_run)
+    print("[methods_used]: ", methods_used, constants.methods)
 
     workbook, worksheet = get_excel_file(metrics_excel_name, constants.sheet_name)
 
     folders_dir = 1
 
     for case_folder in listdir(path_run):
-        print("[case_folder]: ",case_folder)
-        
+        print("[case_folder]: ", case_folder)
 
         modified_idx = 0
 
@@ -77,17 +78,19 @@ def main():
         x_size = original_img.shape[0]
         y_size = original_img.shape[1]
 
-        for impainted_img in (listdir(os.path.join(path_run, case_folder))):          
+        for impainted_img in (listdir(os.path.join(path_run, case_folder))):
             if impainted_img.startswith(constants.distorted_img):
-                print("     ",impainted_img)
+                print("     ", impainted_img)
                 modified_idx += 1
 
-                modified_img = cv2.resize(io.imread(os.path.join(path_run, case_folder, impainted_img)), (y_size, x_size))
-                
+                modified_img = cv2.resize(io.imread(os.path.join(path_run, case_folder, impainted_img)),
+                                          (y_size, x_size))
+
                 # plt.imshow(modified_img)
                 # plt.show() 
 
-                mse_value, ssim_value, psnr_value, rmse_value, vif_value, uqi_value, msssim_value, p_hvs_m_value, p_hvs_value = obtain_similarity_metrics(original_img, modified_img)
+                mse_value, ssim_value, psnr_value, rmse_value, vif_value, uqi_value, msssim_value, p_hvs_m_value, p_hvs_value = obtain_similarity_metrics(
+                    original_img, modified_img)
 
                 metrics = (
                     ['MSE', mse_value],
@@ -103,20 +106,20 @@ def main():
 
                 for metric in range(len(metrics)):
                     worksheet.cell(row=1, column=metric + 3).value = metrics[metric][0]
-                    worksheet.cell(row=folders_dir+modified_idx+1, column=metric + 3).value = metrics[metric][1]
+                    worksheet.cell(row=folders_dir + modified_idx + 1, column=metric + 3).value = metrics[metric][1]
 
-                worksheet.cell(row=folders_dir+modified_idx+1, column=2).value = os.path.splitext(impainted_img)[0]
+                worksheet.cell(row=folders_dir + modified_idx + 1, column=2).value = os.path.splitext(impainted_img)[0]
 
-        worksheet.cell(row=folders_dir+1, column=1).value = os.path.split(case_folder)[1]
+        worksheet.cell(row=folders_dir + 1, column=1).value = os.path.split(case_folder)[1]
         folders_dir += methods_used + 1
 
     workbook.save(metrics_excel_name)
-    print("[Save]: ",metrics_excel_name)
+    print("[Save]: ", metrics_excel_name)
 
     dfs = pd.read_excel(metrics_excel_name, sheet_name=constants.sheet_name)
 
-    for metric in range(0, dfs.shape[1]): # 0 -> 2
-        print("[Statistic_test]: ",dfs.columns[metric])
+    for metric in range(0, dfs.shape[1]):  # 0 -> 2
+        print("[Statistic_test]: ", dfs.columns[metric])
         statistic_test(dfs, dfs.columns[metric], test_excel_name, methods_used)
 
 
