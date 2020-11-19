@@ -13,6 +13,7 @@ from statistic_test import statistic_test
 import sys
 import constants
 import cv2
+import time
 
 import matplotlib.pyplot as plt
 
@@ -44,6 +45,7 @@ def main():
     python similarity_metrics.py --path_run "images/" --metrics_excel_name 'metrics.xlsx'
     --test_excel_name 'statistic_test.xlsx' --methods_used 6
     """
+    start_time = time.time()
 
     parser = argparse.ArgumentParser()
     # parser.add_argument('--path_run', default="images/", help='path to the run folder.')
@@ -51,8 +53,8 @@ def main():
     # parser.add_argument('--test_excel_name', default="statistic_test.xlsx", help='statistic test excel name + .xlsx')
     # parser.add_argument('--methods_used', default=len(constants.methods), type=int,  help='different methods used')
     parser.add_argument('--path_run', default="my_images_test2_shallow_ann/", help='path to the run folder.')
-    parser.add_argument('--metrics_excel_name', default="metrics_shallow3.xlsx", help='metrics excel name + .xlsx')
-    parser.add_argument('--test_excel_name', default="statistic_test_shallow3.xlsx",
+    parser.add_argument('--metrics_excel_name', default="metrics_shallow5_same_test.xlsx", help='metrics excel name + .xlsx')
+    parser.add_argument('--test_excel_name', default="statistic_test_shallow5_same_test.xlsx",
                         help='statistic test excel name + .xlsx')
     parser.add_argument('--methods_used', default=len(constants.methods), type=int, help='different methods used')
     parsed_args = parser.parse_args(sys.argv[1:])
@@ -69,7 +71,7 @@ def main():
 
     folders_dir = 1
 
-    for case_folder in listdir(path_run):
+    for case_folder in sorted(listdir(path_run)):
         print("[case_folder]: ", case_folder)
 
         modified_idx = 0
@@ -78,7 +80,7 @@ def main():
         x_size = original_img.shape[0]
         y_size = original_img.shape[1]
 
-        for impainted_img in (listdir(os.path.join(path_run, case_folder))):
+        for impainted_img in (sorted(listdir(os.path.join(path_run, case_folder)))):
             if impainted_img.startswith(constants.distorted_img):
                 print("     ", impainted_img)
                 modified_idx += 1
@@ -112,6 +114,7 @@ def main():
 
         worksheet.cell(row=folders_dir + 1, column=1).value = os.path.split(case_folder)[1]
         folders_dir += methods_used + 1
+        print("\t\tTime passed: ",round(time.time()-start_time,1))
 
     workbook.save(metrics_excel_name)
     print("[Save]: ", metrics_excel_name)
@@ -121,6 +124,9 @@ def main():
     for metric in range(2, dfs.shape[1]):  # 0 -> 2
         print("[Statistic_test]: ", dfs.columns[metric])
         statistic_test(dfs, dfs.columns[metric], test_excel_name, methods_used)
+
+    end_time = time.time()
+    print("Required time:",round(end_time-start_time,1))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="kmouts@83.212.238.145:2222 WSL venv" createEmptyFolders="true">
     <serverData>
       <paths name="Copy of project-level server 'emp RTX'">
         <serverdata>
@@ -16,6 +16,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="Okeanos Transition (1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="k. moutselos@83.212.238.145:22">
         <serverdata>
           <mappings>
@@ -23,6 +30,21 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="kmouts@83.212.238.145:2222 WSL">
+        <serverdata>
+          <mappings>
+            <mapping deploy="pycharm_projects/REM_HAIR/benchmark-hair-removal" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="kmouts@83.212.238.145:2222 WSL venv">
+        <serverdata>
+          <mappings>
+            <mapping deploy="pycharm_projects/REM_HAIR/benchmark-hair-removal" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

@@ -7,11 +7,11 @@ import statistics as stats
 from xlsx_file import get_excel_file
 import constants
 
-def statistic_test(dfs,metric_name,test_excel_name,methods_used):
 
+def statistic_test(dfs, metric_name, test_excel_name, methods_used):
     workbook, worksheet = get_excel_file(test_excel_name, metric_name)
 
-    for i in range(1, dfs.shape[0], methods_used+1):
+    for i in range(1, dfs.shape[0], methods_used + 1):
         if i == 1:
             metric_values = dfs.iloc[i:i + methods_used][metric_name].values
         else:
@@ -20,7 +20,7 @@ def statistic_test(dfs,metric_name,test_excel_name,methods_used):
     metric_values = np.transpose(metric_values)
 
     num_row = 1
-    methods_labels = constants.methods
+    methods_labels = sorted(constants.methods)
 
     for method1 in range(len(methods_labels)):
         for method2 in range(method1 + 1, len(methods_labels)):

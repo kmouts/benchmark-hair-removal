@@ -8,11 +8,18 @@ PATH2GO = r'C:\Users\kmout\projects\REM_HAIR\benchmark-hair-removal\my_images_te
 # 033439
 # 033439b
 # 233750
+# run_20201011_032429-20201028T163120Z-001\run_20201011_032429
+# drive-download-20201028T163559Z-001\20201024_032650
+# 20201024_215502
+# 20201025_030235
+# 20201025_031526 #
+# same: 20201113_024346, 20201113_013929,20201113_020930, 20201113_015508
+
 
 def main():
-    path = r'C:\Users\kmout\Downloads\drive-download-20201012T062758Z-001\run_20201011_010210'
-    find_what = 'regionfill'  # "regionfill" 'inpaintcoh'
-    replace_with = 'KD10RE'  # "KDshRE"
+    path = r'C:\Users\kmout\Downloads\20201113_015508-20201113T074341Z-001\20201113_015508'
+    find_what = 'inpaintcoh'  # "regionfill" 'inpaintcoh'
+    replace_with = 'KD508'  # "KDshRE"
     count_files = 0
 
     for path, subdirs, files in os.walk(path):
